@@ -27,7 +27,7 @@ type OauthScope struct {
 	MyGormModel
 	Scope       string `sql:"type:varchar(200);unique;not null"`
 	Description sql.NullString
-	IsDefault   bool `sql:"default:false"`
+	IsDefault   bool `sql:"default:0"`
 }
 
 // TableName specifies table name

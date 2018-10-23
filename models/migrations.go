@@ -50,7 +50,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err := db.Model(new(OauthUser)).AddForeignKey(
 		"role_id", "oauth_roles(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -58,7 +58,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthRefreshToken)).AddForeignKey(
 		"client_id", "oauth_clients(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -66,7 +66,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthRefreshToken)).AddForeignKey(
 		"user_id", "oauth_users(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -74,7 +74,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthAccessToken)).AddForeignKey(
 		"client_id", "oauth_clients(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -82,7 +82,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthAccessToken)).AddForeignKey(
 		"user_id", "oauth_users(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -90,7 +90,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthAuthorizationCode)).AddForeignKey(
 		"client_id", "oauth_clients(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
@@ -98,7 +98,7 @@ func migrate0001(db *gorm.DB, name string) error {
 	}
 	err = db.Model(new(OauthAuthorizationCode)).AddForeignKey(
 		"user_id", "oauth_users(id)",
-		"RESTRICT", "RESTRICT",
+		"NO ACTION", "NO ACTION",
 	).Error
 	if err != nil {
 		return fmt.Errorf("Error creating foreign key on "+
