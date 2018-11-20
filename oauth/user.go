@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 	"strings"
@@ -89,10 +90,23 @@ func (s *Service) AuthUser(username, password string) (*models.OauthUser, error)
 	}
 
 	// Verify the password
-	if pass.VerifyPassword(user.Password.String, password) != nil {
+	if !user.Bcrypt {
+		if pass.VerifyPasswordSha1(user.Password.String, user.PasswordSalt.String, password) != nil {
+			return nil, ErrInvalidUserPassword
+		}
+
+		// Rehash with bcrypt
+		bcryptHash, err := pass.HashPassword(password)
+		if err == nil {
+			s.db.Model(user).UpdateColumns(
+				models.OauthUser{
+					Bcrypt:       true,
+					Password:     sql.NullString{String: string(bcryptHash), Valid: true},
+					PasswordSalt: sql.NullString{String: "", Valid: true}})
+		}
+	} else if pass.VerifyPassword(user.Password.String, password) != nil {
 		return nil, ErrInvalidUserPassword
 	}
-
 	return user, nil
 }
 
